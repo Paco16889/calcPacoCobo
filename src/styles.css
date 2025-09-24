@@ -1,0 +1,138 @@
+/* src/styles.css */
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    min-height: 100vh;
+    background-color: #656565;
+    display: grid;
+    place-items: center;
+}
+
+.calculator {
+  background-color: #66a1a1;
+  border-radius: 1.5rem;
+  
+
+  padding: 20px;
+  box-shadow: 0 6px 12px rgba(12, 15, 44, 0.3);
+  width: 350px;
+}
+
+.display {
+  margin-bottom: 15px;
+  padding-top: 5px;
+  
+}
+
+.suncell{
+  height: 24px;
+  background-color: rgb(113, 113, 113);
+  width: 42px;
+  margin-bottom: 16px;
+  margin-left: 10px;
+  border-radius: .25rem;
+  justify-content: space-between;
+  display: flex;
+  
+  align-items: center;
+  border: 1.65px solid rgb(0, 0, 94);
+  box-sizing: content-box;
+
+}
+.cell:first-child{
+  border-top-left-radius: .15rem;
+  border-bottom-left-radius: .15rem;
+}
+.cell:last-child{
+  border-top-right-radius: .15rem;
+  border-bottom-right-radius: .15rem;
+}
+.cell{
+  background-color: black;
+  height: 24px;
+  width: 32.1%;
+}
+
+.display input {
+  border-radius: .75rem;
+  width: 100%;
+  height: 60px;
+  font-size: 2rem;
+  text-align: right;
+  padding: 0 15px;
+  border: none;
+  background-color: #222;
+  color: white;
+  box-sizing: border-box;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+button{
+  border-radius: .5rem;
+}
+.btn {
+  height: 60px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn.clear:hover{
+  opacity: 1;
+  background-color: #8c5200;
+}
+
+.btn.operator:hover{
+  opacity:1;
+  background-color: #de860a;
+}
+
+.btn.number:hover{
+  background-color: #3a68b9;
+}
+
+.btn.number {
+  background-color: #327ee1;
+  color: white;
+}
+
+
+.btn.operator {
+  background-color: #ff9a0c;
+  color: rgb(0, 0, 0);
+}
+
+.btn.clear {
+
+  background-color: #262949;
+  color: rgb(255, 255, 255);
+}
+
+
+.btn.equals {
+  background-color: #ff9500;
+  color: rgb(0, 0, 0);
+  
+}
+
+.btn.zero {
+  grid-column: span 2;
+}
