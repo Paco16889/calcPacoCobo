@@ -5,7 +5,7 @@ let numeroEnMemoria: string = '';
 
 function appendToDisplay(value: string): void {
     let update = false;
-    if (['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1'].includes(value) ) {
+    if (['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1', 'log2', 'log10', 'logn(X)', 'ln', 'abs'].includes(value) ) {
         if (currentInput !== '0' && currentInput !== '') {
             if (previousInput !== '' && operator !== '') {
                 calculate();
@@ -90,6 +90,7 @@ function calculate(): void {
                 result = prev / current; 
                 break;
             
+                //estos deben ser resultado directo nada maspulsar boton de los de exponente fijo o base fija(logaritmos)
             case '^2':
                 result = Math.pow(prev, 2); 
                 break;
@@ -105,6 +106,22 @@ function calculate(): void {
             case '-1':
                 result = prev * -1; 
                 break;
+            case 'log2':
+                result = Math.log2(prev); 
+                break;
+            case 'log10':
+                result = Math.log10(prev); 
+                break;
+            case 'logn(X)':
+                result = logNdX(prev, current); 
+                break;
+            case 'ln':
+                result = Math.log(prev); 
+                break;
+            case 'abs':
+                result = Math.abs(prev); 
+                break;
+                //hasta aqui
             default:
                 return;
         } 
@@ -142,7 +159,9 @@ function setupEventListeners(): void {
             if (target.tagName === 'BUTTON') {
                 const action = target.dataset.action;
                 const value = target.dataset.value;
-                
+                //aqui es donde creo que tengo que tocar para decir que cuando haga por ejemplo
+                //algo al cuadrado solo dando al action del cuadrado entre en calculate teniendo ya 
+                //operator
                     if (action === 'clear') {
                         clearDisplay();
                     } else if (action === 'delete') {
@@ -175,6 +194,10 @@ function memorizarNumero(action: string) {
         updateDisplay();
     }
 
+}
+
+function logNdX(base: number, numero: number): number {
+    return Math.log(numero) / Math.log(base)
 }
 
 //REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
