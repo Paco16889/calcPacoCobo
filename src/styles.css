@@ -28,6 +28,13 @@ body {
   
 }
 
+.details{
+  display: flex;
+  justify-content: space-between;
+  height: 36px;
+  align-items: center;
+}
+
 .suncell{
   height: 24px;
   background-color: rgb(113, 113, 113);
@@ -135,4 +142,50 @@ button{
 
 .btn.zero {
   grid-column: span 2;
+}
+
+.scibuttons{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  row-gap: 10px;
+  column-gap: 8px;
+  margin-bottom: 12px;
+
+}
+
+.btn.mr, .btn.operator.sci{
+  height: 30px;
+  font-size: 12px;
+}
+
+.btn.mr.irr{
+  font-size: 18px;
+}
+
+.btn.mr{
+  background-color: #e53636;
+}
+
+.btn.mr:hover{
+  background-color: #c31515;
+}
+
+.btn.operator.sci{
+  background-color: #e5ab36;
+}
+
+.btn.operator.sci:hover{
+  background-color: #c38915;
+}
+
+img{
+  height: 70px;
+  width: 50px;
+  backface-visibility: hidden;
+  margin-right: 20px;
+  border-radius: .25rem;
+  background-color: transparent;
+  overflow: hidden;
+  margin-bottom: 8px;
+  
 }
