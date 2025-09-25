@@ -1,10 +1,11 @@
 let currentInput: string = '0';
 let operator: string = '';
 let previousInput: string = '';
+let numeroEnMemoria: string = '';
 
 function appendToDisplay(value: string): void {
     let update = false;
-    if (['+', '-', '*', '/', '%'].includes(value) ) {
+    if (['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn'].includes(value) ) {
         if (currentInput !== '0' && currentInput !== '') {
             if (previousInput !== '' && operator !== '') {
                 calculate();
@@ -12,6 +13,7 @@ function appendToDisplay(value: string): void {
             previousInput = currentInput;
             operator = value;
             currentInput = '0';
+            
         }
     } else {
         update = true;
@@ -30,6 +32,19 @@ function appendToDisplay(value: string): void {
 
 function updateDisplay(): void {
     const display = document.getElementById('display') as HTMLInputElement;
+    const checkNumer = currentInput;
+    if (currentInput === 'pi') {
+        const piNumero = Math.PI;
+        currentInput = piNumero.toString()
+    }else if(currentInput === 'e'){
+        const eNumero = Math.E;
+        currentInput = eNumero.toString();
+    }else if (currentInput === 'phi') {
+        const phiNumero = (1 + Math.sqrt(5)) / 2;
+        currentInput = phiNumero.toString();
+    }
+
+    
     display.value = currentInput;
 }
 
@@ -57,7 +72,7 @@ function calculate(): void {
         const prev = parseFloat(previousInput);
         const current = parseFloat(currentInput);
         let result: number;
-        let dividePor0 = false;
+        
         switch (operator) {
             case '+':
                 result = prev + current;
@@ -73,6 +88,10 @@ function calculate(): void {
                 break;
             case '/':
                 result = prev / current; 
+                break;
+            
+            case '^n':
+                result = Math.pow(prev, current); 
                 break;
             default:
                 return;
@@ -100,27 +119,52 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupEventListeners(): void {
-    const buttonsContainer = document.querySelector('.buttons');
+    const buttonsContainer = document.querySelectorAll<HTMLDivElement>('.buttons');
     
     if (buttonsContainer) {
-        buttonsContainer.addEventListener('click', (event) => {
+
+        buttonsContainer.forEach(container => {
+            container.addEventListener('click', (event) => {
             const target = event.target as HTMLButtonElement;
             
             if (target.tagName === 'BUTTON') {
                 const action = target.dataset.action;
                 const value = target.dataset.value;
                 
-                if (action === 'clear') {
-                    clearDisplay();
-                } else if (action === 'delete') {
-                    deleteLast();
-                } else if (action === 'calculate') {
-                    calculate();
-                } else if (value) {
-                    appendToDisplay(value);
+                    if (action === 'clear') {
+                        clearDisplay();
+                    } else if (action === 'delete') {
+                        deleteLast();
+                    } else if (action === 'calculate') {
+                        calculate();
+                    } else if (value) {
+                        appendToDisplay(value);
+                    }else if (action === 'mr' || action === 'm') {
+                        //variable igual a lo que valga enese momento currentInput
+                        memorizarNumero(action);
+                    }else if (value && action) {
+                    
+                        calculate();
+                    }
                 }
-            }
+            });
         });
+        
     }
 }
 
+function memorizarNumero(action: string) {
+    
+    if (action === 'mr') {
+         numeroEnMemoria = currentInput;
+        
+    }else{
+        currentInput = numeroEnMemoria; 
+        updateDisplay();
+    }
+
+}
+
+//REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
+// YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI
+//VALOR === PI ENTONCES UPDATEDISPLAY A VER QUE HACE)

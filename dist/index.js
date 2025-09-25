@@ -2,9 +2,10 @@
 let currentInput = '0';
 let operator = '';
 let previousInput = '';
+let numeroEnMemoria = '';
 function appendToDisplay(value) {
     let update = false;
-    if (['+', '-', '*', '/', '%'].includes(value)) {
+    if (['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn'].includes(value)) {
         if (currentInput !== '0' && currentInput !== '') {
             if (previousInput !== '' && operator !== '') {
                 calculate();
@@ -31,6 +32,19 @@ function appendToDisplay(value) {
 }
 function updateDisplay() {
     const display = document.getElementById('display');
+    const checkNumer = currentInput;
+    if (currentInput === 'pi') {
+        const piNumero = Math.PI;
+        currentInput = piNumero.toString();
+    }
+    else if (currentInput === 'e') {
+        const eNumero = Math.E;
+        currentInput = eNumero.toString();
+    }
+    else if (currentInput === 'phi') {
+        const phiNumero = (1 + Math.sqrt(5)) / 2;
+        currentInput = phiNumero.toString();
+    }
     display.value = currentInput;
 }
 function clearDisplay() {
@@ -55,7 +69,6 @@ function calculate() {
         const prev = parseFloat(previousInput);
         const current = parseFloat(currentInput);
         let result;
-        let dividePor0 = false;
         switch (operator) {
             case '+':
                 result = prev + current;
@@ -71,6 +84,9 @@ function calculate() {
                 break;
             case '/':
                 result = prev / current;
+                break;
+            case '^n':
+                result = Math.pow(prev, current);
                 break;
             default:
                 return;
@@ -94,27 +110,45 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 function setupEventListeners() {
-    const buttonsContainer = document.querySelector('.buttons');
+    const buttonsContainer = document.querySelectorAll('.buttons');
     if (buttonsContainer) {
-        buttonsContainer.addEventListener('click', (event) => {
-            const target = event.target;
-            if (target.tagName === 'BUTTON') {
-                const action = target.dataset.action;
-                const value = target.dataset.value;
-                if (action === 'clear') {
-                    clearDisplay();
+        buttonsContainer.forEach(container => {
+            container.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.tagName === 'BUTTON') {
+                    const action = target.dataset.action;
+                    const value = target.dataset.value;
+                    if (action === 'clear') {
+                        clearDisplay();
+                    }
+                    else if (action === 'delete') {
+                        deleteLast();
+                    }
+                    else if (action === 'calculate') {
+                        calculate();
+                    }
+                    else if (value) {
+                        appendToDisplay(value);
+                    }
+                    else if (action === 'mr' || action === 'm') {
+                        //variable igual a lo que valga enese momento currentInput
+                        memorizarNumero(action);
+                    }
+                    else if (value && action) {
+                        calculate();
+                    }
                 }
-                else if (action === 'delete') {
-                    deleteLast();
-                }
-                else if (action === 'calculate') {
-                    calculate();
-                }
-                else if (value) {
-                    appendToDisplay(value);
-                }
-            }
+            });
         });
+    }
+}
+function memorizarNumero(action) {
+    if (action === 'mr') {
+        numeroEnMemoria = currentInput;
+    }
+    else {
+        currentInput = numeroEnMemoria;
+        updateDisplay();
     }
 }
 //# sourceMappingURL=index.js.map

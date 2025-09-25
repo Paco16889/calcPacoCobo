@@ -144,7 +144,7 @@ button{
   grid-column: span 2;
 }
 
-.scibuttons{
+.buttons.sci{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   row-gap: 10px;
