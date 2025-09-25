@@ -5,7 +5,7 @@ let previousInput = '';
 let numeroEnMemoria = '';
 function appendToDisplay(value) {
     let update = false;
-    if (['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn'].includes(value)) {
+    if (['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1'].includes(value)) {
         if (currentInput !== '0' && currentInput !== '') {
             if (previousInput !== '' && operator !== '') {
                 calculate();
@@ -85,8 +85,20 @@ function calculate() {
             case '/':
                 result = prev / current;
                 break;
+            case '^2':
+                result = Math.pow(prev, 2);
+                break;
             case '^n':
                 result = Math.pow(prev, current);
+                break;
+            case 'v2':
+                result = Math.sqrt(prev);
+                break;
+            case 'vn':
+                result = Math.pow(prev, (1 / current));
+                break;
+            case '-1':
+                result = prev * -1;
                 break;
             default:
                 return;
@@ -151,4 +163,7 @@ function memorizarNumero(action) {
         updateDisplay();
     }
 }
+//REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
+// YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI
+//VALOR === PI ENTONCES UPDATEDISPLAY A VER QUE HACE)
 //# sourceMappingURL=index.js.map

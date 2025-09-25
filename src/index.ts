@@ -5,7 +5,7 @@ let numeroEnMemoria: string = '';
 
 function appendToDisplay(value: string): void {
     let update = false;
-    if (['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn'].includes(value) ) {
+    if (['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1'].includes(value) ) {
         if (currentInput !== '0' && currentInput !== '') {
             if (previousInput !== '' && operator !== '') {
                 calculate();
@@ -90,8 +90,20 @@ function calculate(): void {
                 result = prev / current; 
                 break;
             
+            case '^2':
+                result = Math.pow(prev, 2); 
+                break;
             case '^n':
                 result = Math.pow(prev, current); 
+                break;
+            case 'v2':
+                result = Math.sqrt(prev) 
+                break;
+            case 'vn':
+                result = Math.pow(prev, (1 / current)); 
+                break;
+            case '-1':
+                result = prev * -1; 
                 break;
             default:
                 return;
