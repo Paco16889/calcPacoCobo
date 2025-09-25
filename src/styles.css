@@ -189,3 +189,17 @@ img{
   margin-bottom: 8px;
   
 }
+
+.buttons.tri{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+   row-gap: 10px;
+  column-gap: 8px;
+  margin-bottom: 12px;
+}
+
+.btn.operator.tri{
+   
+  height: 36px;
+  font-size: 15px;
+}
