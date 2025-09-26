@@ -10,4 +10,5 @@ declare function calculate(): void;
 declare function setupEventListeners(): void;
 declare function memorizarNumero(action: string): void;
 declare function logNdX(base: number, numero: number): number;
+declare function gradianes(angulo: number): number;
 //# sourceMappingURL=index.d.ts.map

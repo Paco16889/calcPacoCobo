@@ -5,7 +5,8 @@ let numeroEnMemoria: string = '';
 
 function appendToDisplay(value: string): void {
     let update = false;
-    if (['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1', 'log2', 'log10', 'logn(X)', 'ln', 'abs'].includes(value) ) {
+    const signos = ['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1', 'log2', 'log10', 'logn(X)', 'ln', 'abs', 'sen', 'cos', 'tan', 'sec', 'cosec', 'cotan'];
+    if (signos.includes(value) ) {
         if (currentInput !== '0' && currentInput !== '') {
             if (previousInput !== '' && operator !== '') {
                 calculate();
@@ -121,6 +122,24 @@ function calculate(): void {
             case 'abs':
                 result = Math.abs(prev); 
                 break;
+            case 'sen':
+                result = Math.sin(gradianes(prev)); 
+                break;
+            case 'cos':
+                result = Math.cos(gradianes(prev)); 
+                break;
+            case 'tan':
+                result = Math.tan(gradianes(prev)); 
+                break;
+            case 'sec':
+                result = 1 / Math.cos(gradianes(prev)); 
+                break;
+            case 'cosec':
+                result = 1 / Math.sin(gradianes(prev)); 
+                break;
+            case 'cotan':
+                result = 1 / Math.tan(gradianes(prev)); 
+                break;
                 //hasta aqui
             default:
                 return;
@@ -200,6 +219,9 @@ function logNdX(base: number, numero: number): number {
     return Math.log(numero) / Math.log(base)
 }
 
+function gradianes(angulo: number): number{
+    return angulo/(Math.PI/180);
+}
 //REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
 // YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI
 //VALOR === PI ENTONCES UPDATEDISPLAY A VER QUE HACE)

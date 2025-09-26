@@ -200,6 +200,11 @@ img{
 
 .btn.operator.tri{
    
-  height: 36px;
+  height: 30px;
   font-size: 15px;
+  background-color: #ffa81c;
+}
+
+.btn.operator.tri:hover{
+  background-color: #a96f12;
 }
