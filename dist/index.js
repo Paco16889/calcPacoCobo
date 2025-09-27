@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(dameReloj, 1000);
     updateDisplay();
     setupEventListeners();
-    enciendeCientifica();
+    enciendeModos();
 });
 function setupEventListeners() {
     const buttonsContainer = document.querySelectorAll('.buttons');
@@ -257,10 +257,26 @@ function mostrarModoCientifico() {
       <button class="btn operator tri" data-value="cotan">cotan</button>
         `;
 }
-function enciendeCientifica() {
+function mostrarModoBinario() {
+    const containerBinario = document.getElementById("containerBinaria");
+    if (!containerBinario) {
+        return;
+    }
+    containerBinario.innerHTML = `
+        <button class="btn operator bin" data-action="bin">bin</button>
+      <button class="btn operator bin" data-action="hex">hex</button>
+      <button class="btn operator bin" data-action="oct">octal</button>
+      <button class="btn operator bin" data-action="dec">dec</button>
+        `;
+}
+function enciendeModos() {
     const slider = document.getElementById("sliderCientifica");
+    const slider2 = document.getElementById("sliderBinaria");
     const containerCientifica = document.getElementById("containerCientifica");
+    const containerBinario = document.getElementById("containerBinaria");
     if (!slider)
+        return;
+    if (!slider2)
         return;
     slider.addEventListener('change', () => {
         if (slider.checked) {
@@ -268,6 +284,14 @@ function enciendeCientifica() {
         }
         else {
             containerCientifica.innerHTML = ``;
+        }
+    });
+    slider2.addEventListener('change', () => {
+        if (slider2.checked) {
+            mostrarModoBinario();
+        }
+        else {
+            containerBinario.innerHTML = ``;
         }
     });
 }

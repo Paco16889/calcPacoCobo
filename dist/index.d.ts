@@ -14,5 +14,6 @@ declare function gradianes(angulo: number): number;
 declare function dameReloj(): void;
 declare function hacerPad(n: number, cantidad: number): string;
 declare function mostrarModoCientifico(): void;
-declare function enciendeCientifica(): void;
+declare function mostrarModoBinario(): void;
+declare function enciendeModos(): void;
 //# sourceMappingURL=index.d.ts.map

@@ -17,7 +17,8 @@
           <div class="cell"></div>
         </div>
         <div class="reloj" id="reloj"></div>
-        <div class="btnCientifica">
+        <div class="activadores">
+           <div class="btnCientifica">
           <label id="switch">
             <input type="checkbox" id="sliderCientifica">
             <span class="slider"></span>
@@ -25,6 +26,16 @@
          
   
         </div>
+         <div class="btnCientifica">
+          <label id="switchBin">
+            <input type="checkbox" id="sliderBinaria">
+            <span class="slider"></span>
+          </label>
+         
+  
+        </div>
+        </div>
+       
         <img src="casio-logo-png-transparent.png" alt="">
       </div>
       
@@ -34,9 +45,10 @@
       <!-- añadir log1p que es el neperiano en ts tambien logaritmo con base elegible-->
       
     </div>
-    <div class="buttons tri">
+    <div class="buttons bin" id="containerBinaria">
       
     </div>
+    
     <div class="buttons">
       <button class="btn clear" data-action="clear">C</button>
       <button class="btn operator" data-action="delete">⌫</button>
@@ -66,7 +78,9 @@
       <button class="btn number" data-value=".">.</button>
       <button class="btn equals" data-action="calculate" rowspan="2">=</button>
     </div>
+    
   </div>
+  
   <script src="index.js"></script>
 </body>
 </html>

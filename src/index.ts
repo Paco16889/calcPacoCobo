@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(dameReloj, 1000);
     updateDisplay();
     setupEventListeners();
-    enciendeCientifica();
+    enciendeModos();
 });
 
 function setupEventListeners(): void {
@@ -285,20 +285,45 @@ function mostrarModoCientifico() {
         `;
 }
 
-function enciendeCientifica() {
-    const slider = document.getElementById("sliderCientifica") as HTMLInputElement;
+
+
+function mostrarModoBinario() {
+    const containerBinario = document.getElementById("containerBinaria")as unknown as HTMLDivElement;
+    if (!containerBinario) {
+        return;
+    }
+        containerBinario.innerHTML= `
+        <button class="btn operator bin" data-action="bin">bin</button>
+      <button class="btn operator bin" data-action="hex">hex</button>
+      <button class="btn operator bin" data-action="oct">octal</button>
+      <button class="btn operator bin" data-action="dec">dec</button>
+        `;
+}
+function enciendeModos() {
+    
+      const slider = document.getElementById("sliderCientifica") as HTMLInputElement;
+      const slider2 = document.getElementById("sliderBinaria") as HTMLInputElement;
         const containerCientifica = document.getElementById("containerCientifica")as unknown as HTMLDivElement;
+        const containerBinario = document.getElementById("containerBinaria") as unknown as HTMLDivElement;
 
     if (!slider) return;
+    if (!slider2) return;
     slider.addEventListener('change', () => {
         if (slider.checked) {
             mostrarModoCientifico();
         }else{
             containerCientifica.innerHTML =``;
         }
-    })
+    });
+
+    slider2.addEventListener('change', () => {
+        if (slider2.checked) {
+            mostrarModoBinario();
+        }else{
+            containerBinario.innerHTML =``;
+        }
+    });
         
-    
 }
 //REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
 // YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI
