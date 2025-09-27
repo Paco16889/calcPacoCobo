@@ -11,4 +11,8 @@ declare function setupEventListeners(): void;
 declare function memorizarNumero(action: string): void;
 declare function logNdX(base: number, numero: number): number;
 declare function gradianes(angulo: number): number;
+declare function dameReloj(): void;
+declare function hacerPad(n: number, cantidad: number): string;
+declare function mostrarModoCientifico(): void;
+declare function enciendeCientifica(): void;
 //# sourceMappingURL=index.d.ts.map

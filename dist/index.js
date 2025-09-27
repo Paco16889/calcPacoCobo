@@ -154,8 +154,10 @@ function calculate() {
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
+    setInterval(dameReloj, 1000);
     updateDisplay();
     setupEventListeners();
+    enciendeCientifica();
 });
 function setupEventListeners() {
     const buttonsContainer = document.querySelectorAll('.buttons');
@@ -207,6 +209,67 @@ function logNdX(base, numero) {
 }
 function gradianes(angulo) {
     return angulo / (Math.PI / 180);
+}
+function dameReloj() {
+    // const now = new Date();
+    let ahora = (Math.floor(Date.now() / 1000)) + 7200; //hacer un selector mediante boton o algo para horario de verano
+    //y barajar cambio de hora
+    let segundos = ahora % 60;
+    let minutos = (Math.floor(ahora / 60)) % 60;
+    let horas = (Math.floor(ahora / 3600)) % 24;
+    let dias = Math.floor(ahora / (3600 * 24));
+    let horaString = `${hacerPad(horas, 2)}:${hacerPad(minutos, 2)}:${hacerPad(segundos, 2)}`;
+    let element = document.getElementById('reloj');
+    if (element)
+        element.innerHTML =
+            horaString;
+}
+function hacerPad(n, cantidad) {
+    const numero = n.toString();
+    return numero.padStart(cantidad, '0');
+}
+function mostrarModoCientifico() {
+    const containerCientifica = document.getElementById("containerCientifica");
+    if (!containerCientifica) {
+        return;
+    }
+    containerCientifica.innerHTML = `
+        <button class="btn mr" data-action="mr">MR</button>
+      <button class="btn mr" data-action="m">M</button>
+      <button class="btn mr irr" data-value="pi">π</button>
+      <button class="btn mr irr" data-value="e">e</button>
+      <button class="btn mr irr" data-value="phi">Φ</button>
+      <button class="btn operator sci" data-action="^2" data-value="^2">^2</button>
+      <button class="btn operator sci" data-value="^n">^N</button>
+      <button class="btn operator sci" data-action="v2" data-value="v2">V2</button>
+      <button class="btn operator sci" data-value="vn">Vn</button>
+      <button class="btn operator sci" data-value="log10">Log10</button>
+      <button class="btn operator sci" data-value="log2">Log2</button>
+      <button class="btn operator sci" data-value="logn(X)">Logn(X)</button>
+      
+      <button class="btn operator sci" data-value="abs">ABS</button>
+      <button class="btn operator sci" data-value="-1">-n</button>
+      <button class="btn operator tri" data-value="sen">sen</button>
+      <button class="btn operator tri" data-value="cos">cos</button>
+      <button class="btn operator tri" data-value="tan">tan</button>
+      <button class="btn operator tri" data-value="sec">sec</button>
+      <button class="btn operator tri" data-value="cosec">cosec</button>
+      <button class="btn operator tri" data-value="cotan">cotan</button>
+        `;
+}
+function enciendeCientifica() {
+    const slider = document.getElementById("sliderCientifica");
+    const containerCientifica = document.getElementById("containerCientifica");
+    if (!slider)
+        return;
+    slider.addEventListener('change', () => {
+        if (slider.checked) {
+            mostrarModoCientifico();
+        }
+        else {
+            containerCientifica.innerHTML = ``;
+        }
+    });
 }
 //REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
 // YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI
