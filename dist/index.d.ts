@@ -16,4 +16,6 @@ declare function hacerPad(n: number, cantidad: number): string;
 declare function mostrarModoCientifico(): void;
 declare function mostrarModoBinario(): void;
 declare function enciendeModos(): void;
+declare function decimalAbinario(n: number): number;
+declare function decimalAHexadecimal(n: number): string;
 //# sourceMappingURL=index.d.ts.map

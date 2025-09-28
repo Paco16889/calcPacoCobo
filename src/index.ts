@@ -9,7 +9,7 @@ let numeroEnMemoria: string = '';
 
 function appendToDisplay(value: string): void {
     let update = false;
-    const signos = ['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1', 'log2', 'log10', 'logn(X)', 'ln', 'abs', 'sen', 'cos', 'tan', 'sec', 'cosec', 'cotan'];
+    const signos = ['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1', 'log2', 'log10', 'logn(X)', 'ln', 'abs', 'sen', 'cos', 'tan', 'sec', 'cosec', 'cotan', 'bin', 'hex'];
     if (signos.includes(value) ) {
         if (currentInput !== '0' && currentInput !== '') {
             if (previousInput !== '' && operator !== '') {
@@ -77,6 +77,14 @@ function calculate(): void {
         const prev = parseFloat(previousInput);
         const current = parseFloat(currentInput);
         let result: number;
+        if (operator === 'hex') {
+            let resultadoHex = decimalAHexadecimal(prev);
+            currentInput = resultadoHex;
+            operator = '';
+            previousInput = '';
+            updateDisplay();
+            return;
+        }
         
         switch (operator) {
             case '+':
@@ -145,6 +153,10 @@ function calculate(): void {
                 result = 1 / Math.tan(gradianes(prev)); 
                 break;
                 //hasta aqui
+            case 'bin':
+                result = decimalAbinario(prev); 
+                break;
+            
             default:
                 return;
         } 
@@ -293,10 +305,10 @@ function mostrarModoBinario() {
         return;
     }
         containerBinario.innerHTML= `
-        <button class="btn operator bin" data-action="bin">bin</button>
-      <button class="btn operator bin" data-action="hex">hex</button>
-      <button class="btn operator bin" data-action="oct">octal</button>
-      <button class="btn operator bin" data-action="dec">dec</button>
+        <button class="btn operator bin" data-value="bin">bin</button>
+      <button class="btn operator bin" data-value="hex">hex</button>
+      <button class="btn operator bin" data-value="oct">octal</button>
+      <button class="btn operator bin" data-value="dec">dec</button>
         `;
 }
 function enciendeModos() {
@@ -325,6 +337,63 @@ function enciendeModos() {
     });
         
 }
+
+function decimalAbinario(n: number) : number{
+    
+
+    if (n === 0) {
+    return 0;
+  }
+  let dividendo = n
+  let resto = 0;
+  let listaRestos: number[] = [];
+  let listaRestosGirada: number[] = [];
+  let binarioString = '';
+ while (dividendo != 0) {
+    resto = dividendo % 2
+    dividendo = Math.floor(dividendo / 2);
+    listaRestos.push(resto);
+ }
+  
+ for (let i = listaRestos.length - 1;i >= 0; i--) {
+  listaRestosGirada.push(listaRestos[i]!);
+  
+ }
+
+ binarioString = listaRestosGirada.join('');
+
+  return parseInt(binarioString);
+    //recibe un número y con el algoritmo que tengo en el otro codigo 
+    //hacemos el nmero binario se pasa a string
+    // y se parsea indicando que es un string que representa numero binario 
+}
+
+function decimalAHexadecimal(n:number): string {
+    let hexaString: string = '';
+
+    if (n===0) {
+        return '0';
+    }
+    let dividendo = n;
+    let resto: number = 0;
+    let caracteresHexa: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+    let listaRestos: string[] = [];
+    let listaRestosGirada: string [] = [];
+    while (dividendo!= 0 ) {
+        resto = dividendo % 16 ;
+        dividendo = (Math.floor(dividendo / 16));
+        listaRestos.push(caracteresHexa[resto]!);
+    }
+
+    for (let i = listaRestos.length - 1; i >= 0 ; i--){
+        listaRestosGirada.push(listaRestos[i]!);
+       
+    }
+    hexaString = listaRestosGirada.join('');
+    
+    return hexaString;
+}
+
 //REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
 // YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI
 //VALOR === PI ENTONCES UPDATEDISPLAY A VER QUE HACE)
