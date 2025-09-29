@@ -9,7 +9,7 @@ let numeroEnMemoria: string = '';
 
 function appendToDisplay(value: string): void {
     let update = false;
-    const signos = ['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1', 'log2', 'log10', 'logn(X)', 'ln', 'abs', 'sen', 'cos', 'tan', 'sec', 'cosec', 'cotan', 'bin', 'hex'];
+    const signos = ['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1', 'log2', 'log10', 'logn(X)', 'ln', 'abs', 'sen', 'cos', 'tan', 'sec', 'cosec', 'cotan', 'bin', 'hex', 'oct', 'dec'];
     if (signos.includes(value) ) {
         if (currentInput !== '0' && currentInput !== '') {
             if (previousInput !== '' && operator !== '') {
@@ -76,7 +76,7 @@ function calculate(): void {
     if (previousInput !== '' && currentInput !== '' && operator !== '') {
         const prev = parseFloat(previousInput);
         const current = parseFloat(currentInput);
-        let result: number;
+        let result: number|string;
         if (operator === 'hex') {
             let resultadoHex = decimalAHexadecimal(prev);
             currentInput = resultadoHex;
@@ -154,7 +154,15 @@ function calculate(): void {
                 break;
                 //hasta aqui
             case 'bin':
-                result = decimalAbinario(prev); 
+                result = decimalAbinarioUoctal(prev, operator); 
+                break;
+            
+            case 'oct':
+                result = decimalAbinarioUoctal(prev, operator); 
+                break;
+
+            case 'dec':
+                result = binarioAdecimal(prev); 
                 break;
             
             default:
@@ -338,11 +346,14 @@ function enciendeModos() {
         
 }
 
-function decimalAbinario(n: number) : number{
+function decimalAbinarioUoctal(n: number, sistema: string) : number{
     
-
+    let divisor: number = 2;
     if (n === 0) {
     return 0;
+  }
+  if (sistema === 'oct') {
+    divisor = 8;
   }
   let dividendo = n
   let resto = 0;
@@ -350,8 +361,8 @@ function decimalAbinario(n: number) : number{
   let listaRestosGirada: number[] = [];
   let binarioString = '';
  while (dividendo != 0) {
-    resto = dividendo % 2
-    dividendo = Math.floor(dividendo / 2);
+    resto = dividendo % divisor
+    dividendo = Math.floor(dividendo / divisor);
     listaRestos.push(resto);
  }
   
@@ -394,6 +405,25 @@ function decimalAHexadecimal(n:number): string {
     return hexaString;
 }
 
+
+function binarioAdecimal(n:number):number {
+    let numeroString = n.toString();
+    let numeros: number[] = [];
+    let numeroDevuelto: number = 0;
+    let comprobar = numeroString.length;
+    let j: number = Math.pow(2, numeroString.length -1);                                  
+
+    for (let i = 0; i < numeroString.length; i++) {
+        numeros[i] = (parseInt(numeroString.charAt(i))) *j;
+        numeroDevuelto += numeros[i]!;
+        j/=2;                                              
+    }
+   
+    return numeroDevuelto;
+}
+function otroHex(n:number): string {
+    return n.toString(16)
+}
 //REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
 // YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI
 //VALOR === PI ENTONCES UPDATEDISPLAY A VER QUE HACE)
