@@ -621,5 +621,10 @@ function calculateHexa(n: string, z: string): void {
 //REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
 // YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI
 //VALOR === PI ENTONCES UPDATEDISPLAY A VER QUE HACE)
+//falta comprobar muchas cosas cuando pasas de octal y hexa decimal a binario no lo reconoce (hexadecimal facil con lasletras)
+//octal habrá que decirle que si esta en modo octal y da a dec chico entonces convierta y este en el que este a los pequeños para cambiar de tipo de unidad
+//pero como poner que si convierto un resultado no quiera seguir en el sistema o cambiar a decimal
+//falta cuando cambio de modo pantalla a cero
+//y seguir observando
 
 //quita logaritmo neperiano y mete los botones de trigonometria dentro de los sci que solo añade una linea mas y los pongo con otro color o algo
