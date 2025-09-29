@@ -6,6 +6,9 @@ let currentInput: string = '0';
 let operator: string = '';
 let previousInput: string = '';
 let numeroEnMemoria: string = '';
+let activarBinaria: boolean = false;
+let activarHexa: boolean = false;
+let activarOctal: boolean = false;
 
 function appendToDisplay(value: string): void {
     let update = false;
@@ -41,7 +44,7 @@ function updateDisplay(): void {
     if (currentInput === 'pi') {
         const piNumero = Math.PI;
         currentInput = piNumero.toString()
-    }else if(currentInput === 'e'){
+    }else if(currentInput === 'euler'){
         const eNumero = Math.E;
         currentInput = eNumero.toString();
     }else if (currentInput === 'phi') {
@@ -213,7 +216,13 @@ function setupEventListeners(): void {
                     } else if (action === 'delete') {
                         deleteLast();
                     } else if (action === 'calculate') {
-                        calculate();
+                        if (activarBinaria || activarOctal) {
+                            calculateBin();
+                        }else if (activarHexa) {
+                            calculateHexa(previousInput, currentInput);
+                        }else{
+                            calculate();
+                        }
                     } else if (value) {
                         appendToDisplay(value);
                     }else if (action === 'mr' || action === 'm') {
@@ -222,6 +231,22 @@ function setupEventListeners(): void {
                     }else if (value && action) {
                     
                         calculate();
+                    }else if(action === 'selectBin'){
+                        activarBinaria = true;
+                        activarHexa = false;
+                        activarOctal = false;
+                    }else if(action === 'selectHex'){
+                        activarHexa = true;
+                        activarBinaria = false;
+                        activarOctal = false;
+                    }else if(action === 'selectOct'){
+                        activarOctal = true;
+                        activarBinaria = false;
+                        activarHexa = false;
+                    }else if(action === 'selectDec'){
+                        activarBinaria = false;
+                        activarHexa = false;
+                        activarOctal = false;
                     }
                 }
             });
@@ -284,7 +309,7 @@ function mostrarModoCientifico() {
         <button class="btn mr" data-action="mr">MR</button>
       <button class="btn mr" data-action="m">M</button>
       <button class="btn mr irr" data-value="pi">π</button>
-      <button class="btn mr irr" data-value="e">e</button>
+      <button class="btn mr irr" data-value="euler">e</button>
       <button class="btn mr irr" data-value="phi">Φ</button>
       <button class="btn operator sci" data-action="^2" data-value="^2">^2</button>
       <button class="btn operator sci" data-value="^n">^N</button>
@@ -318,14 +343,71 @@ function mostrarModoBinario() {
       <button class="btn operator bin" data-value="oct">octal</button>
       <button class="btn operator bin" data-value="dec">dec</button>
         `;
+        const calculadora = document.getElementById("calculator") as unknown as HTMLDivElement;
+        if(!calculadora){
+            return;
+        }
+        calculadora.classList.add('grande');
+        const botoneraPrincipal = document.getElementById('buttonsPrimarios') as unknown as HTMLDivElement;
+        botoneraPrincipal.classList.add('grande');
+       
+        botoneraPrincipal.innerHTML = ``;
+        botoneraPrincipal.innerHTML = `
+        <button class="btn clear" data-action="clear">Clear</button>
+      <button class="btn operator" data-action="delete">⌫</button>
+      <button class="btn operator" data-action="selectBin">OpBin</button>
+      <button class="btn operator" data-action="selectHex">OpHex</button>
+      <button class="btn operator" data-action="selectOct">OpOct</button>
+      <button class="btn operator" data-action="selectDec">OpDec</button>
+
+      
+      <button class="btn number" data-value="c">C</button>
+      <button class="btn number" data-value="d">D</button>
+      <button class="btn number" data-value="e">E</button>
+      <button class="btn number" data-value="f">F</button>
+      <button class="btn operator" data-value="%">%</button>
+      <button class="btn operator" data-value="/">/</button>
+      
+      
+      <button class="btn number" data-value="8">8</button>
+      <button class="btn number" data-value="9">9</button>
+      <button class="btn number" data-value="a">A</button>
+      <button class="btn number" data-value="b">B</button>
+      <button class="btn operator" data-value="*">×</button>
+      <button class="btn operator" data-value="-">-</button>
+      
+      
+      
+      
+      
+      <button class="btn number" data-value="4">4</button>
+      <button class="btn number" data-value="5">5</button>
+      <button class="btn number" data-value="6">6</button>
+      <button class="btn number" data-value="7">7</button>
+      <button class="btn operator" data-value="+">+</button>
+      <button class="btn number" data-value=".">.</button>
+      
+      
+      <button class="btn number zero grande" data-value="0">0</button>
+      <button class="btn number" data-value="1">1</button>
+      <button class="btn number" data-value="2">2</button>
+      <button class="btn number" data-value="3">3</button>
+      <button class="btn equals grande" data-action="calculate" rowspan="2">=</button>
+      
+      
+        `;
 }
 function enciendeModos() {
     
-      const slider = document.getElementById("sliderCientifica") as HTMLInputElement;
-      const slider2 = document.getElementById("sliderBinaria") as HTMLInputElement;
+        const slider = document.getElementById("sliderCientifica") as HTMLInputElement;
+        const slider2 = document.getElementById("sliderBinaria") as HTMLInputElement;
+        const calculadora = document.getElementById("calculator") as unknown as HTMLDivElement;
+
         const containerCientifica = document.getElementById("containerCientifica")as unknown as HTMLDivElement;
         const containerBinario = document.getElementById("containerBinaria") as unknown as HTMLDivElement;
-
+        const containerPrimario = document.getElementById('buttonsPrimarios')as unknown as HTMLDivElement;
+        const originalHtml = containerPrimario.innerHTML;
+    
     if (!slider) return;
     if (!slider2) return;
     slider.addEventListener('change', () => {
@@ -340,7 +422,10 @@ function enciendeModos() {
         if (slider2.checked) {
             mostrarModoBinario();
         }else{
-            containerBinario.innerHTML =``;
+            containerBinario.innerHTML = `` ;
+            containerPrimario.innerHTML = originalHtml;
+            containerPrimario.classList.remove('grande');
+            calculadora.classList.remove('grande');
         }
     });
         
@@ -410,7 +495,7 @@ function binarioAdecimal(n:number):number {
     let numeroString = n.toString();
     let numeros: number[] = [];
     let numeroDevuelto: number = 0;
-    let comprobar = numeroString.length;
+    
     let j: number = Math.pow(2, numeroString.length -1);                                  
 
     for (let i = 0; i < numeroString.length; i++) {
@@ -423,6 +508,115 @@ function binarioAdecimal(n:number):number {
 }
 function otroHex(n:number): string {
     return n.toString(16)
+}
+
+
+function calculateBin(): void {
+    if (previousInput !== '' && currentInput !== '' && operator !== '') {
+        let modo: number = 2;
+        let modoString: string = 'bin'
+        if (activarOctal) {
+            modo = 8;
+            modoString = 'oct'
+        }
+        const prev = parseInt(previousInput, modo);
+        const current = parseInt(currentInput, modo);
+        if (Number.isNaN(prev) || Number.isNaN(current)) {
+            currentInput = 'ERROR';
+            operator = '';
+            previousInput = '';
+            updateDisplay();
+            return;
+        }
+        let result: number;
+        
+        
+        switch (operator) {
+            case '+':
+                result = prev + current;
+                break;
+            case '-':
+                result = prev - current;
+                break;
+            case '*':
+                result = prev * current;
+                break;
+            case '%':
+                result = prev % current;
+                break;
+            case '/':
+                result = prev / current; 
+                break;
+            
+                //estos deben ser resultado directo nada maspulsar boton de los de exponente fijo o base fija(logaritmos)
+          
+            
+            default:
+                return;
+        } 
+
+        result = decimalAbinarioUoctal(result,modoString);
+        
+
+
+        if (result === Infinity || Number.isNaN(result) ) {
+        currentInput = 'ERROR';
+        operator = '';
+        previousInput = '';
+        updateDisplay();
+        } else {
+        currentInput = result.toString();
+        operator = '';
+        previousInput = '';
+        updateDisplay();
+        }  
+    } 
+}
+
+function calculateHexa(n: string, z: string): void {
+    if (n !== '' && z !== '' && operator !== '') {
+        let a = parseInt(n, 16);
+        let b = parseInt(z, 16);
+        let resu: number = 0;
+        switch (operator) {
+            case '+':
+                resu = a + b;
+                break;
+            case '-':
+                resu = a - b;
+                break;
+            case '*':
+                resu = a * b;
+                break;
+            case '%':
+                resu = a % b;
+                break;
+            case '/':
+                resu = a / b; 
+                break;
+            
+                //estos deben ser resultado directo nada maspulsar boton de los de exponente fijo o base fija(logaritmos)
+            
+            default:
+                return;
+        } 
+
+        
+        if (resu === Infinity || Number.isNaN(resu) ) {
+            currentInput = 'ERROR';
+            operator = '';
+            previousInput = '';
+            updateDisplay();
+        } else {
+        let result = decimalAHexadecimal(resu);
+        currentInput = result.toString();
+        operator = '';
+        previousInput = '';
+        updateDisplay();
+        }  
+
+    }
+    
 }
 //REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
 // YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI
