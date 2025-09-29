@@ -12,17 +12,6 @@ declare function deleteLast(): void;
 declare function calculate(): void;
 declare function setupEventListeners(): void;
 declare function memorizarNumero(action: string): void;
-declare function logNdX(base: number, numero: number): number;
-declare function gradianes(angulo: number): number;
 declare function dameReloj(): void;
 declare function hacerPad(n: number, cantidad: number): string;
-declare function mostrarModoCientifico(): void;
-declare function mostrarModoBinario(): void;
-declare function enciendeModos(): void;
-declare function decimalAbinarioUoctal(n: number, sistema: string): number;
-declare function decimalAHexadecimal(n: number): string;
-declare function binarioAdecimal(n: number): number;
-declare function otroHex(n: number): string;
-declare function calculateBin(): void;
-declare function calculateHexa(n: string, z: string): void;
 //# sourceMappingURL=index.d.ts.map

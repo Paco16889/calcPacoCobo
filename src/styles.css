@@ -36,58 +36,9 @@ body {
   
 }
 
-.details{
-  display: flex;
-  justify-content: space-between;
-  height: 75px;
-  align-items: center;
-  margin-bottom: 3px;
-}
 
-.suncell{
-  height: 24px;
-  background-color: rgb(113, 113, 113);
-  width: 42px;
-  margin-bottom: 5px;
-  margin-left: 10px;
-  border-radius: .25rem;
-  justify-content: space-between;
-  display: flex;
-  
-  align-items: center;
-  border: 1.65px solid rgb(0, 0, 94);
-  box-sizing: content-box;
 
-}
-.cell:first-child{
-  border-top-left-radius: .15rem;
-  border-bottom-left-radius: .15rem;
-}
-.cell:last-child{
-  border-top-right-radius: .15rem;
-  border-bottom-right-radius: .15rem;
-}
-.cell{
-  background-color: black;
-  height: 24px;
-  width: 32.1%;
-}
 
-.display input {
-  border-radius: .75rem;
-  width: 100%;
-  height: 60px;
-  font-size: 2rem;
-  text-align: right;
-  padding: 0 15px;
-  border: none;
-  background-color: #222;
-  color: white;
-  box-sizing: border-box;
-  font-family: 'DSEG7';
-  letter-spacing: 1.5px;
-  font-weight: bold;
-}
 
 .buttons {
   display: grid;
@@ -95,9 +46,7 @@ body {
   gap: 10px;
 }
 
-.buttons.grande{
-  grid-template-columns: repeat(6, 1fr);
-}
+
 
 button{
   border-radius: .5rem;
@@ -135,7 +84,9 @@ button{
   color: white;
 }
 
-
+.btn.number.cambia{
+  grid-column: span 2;
+}
 .btn.operator {
   background-color: #ff9a0c;
   color: rgb(0, 0, 0);
@@ -154,65 +105,22 @@ button{
   
 }
 
-.btn.zero {
-  grid-column: span 2;
+.btn.stop {
+  grid-column: span 4;
+  background-color: black;
 }
 
-.btn.zero.grande {
-  grid-column: 1;
-}
 
-.btn.equals.grande {
-  grid-column: span 2;
-}
 
-.buttons.sci{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  row-gap: 10px;
-  column-gap: 8px;
-  margin-bottom: 12px;
 
-}
 
-.buttons.bin{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-   row-gap: 10px;
-  column-gap: 8px;
-  margin-bottom: 12px;
-}
 
-.btn.mr, .btn.operator.sci, .btn.operator.bin{
-  height: 30px;
-  font-size: 12px;
-}
-
-.btn.mr.irr{
-  font-size: 18px;
-}
-
-.btn.mr{
-  background-color: #e53636;
-}
-
-.btn.mr:hover{
-  background-color: #c31515;
-}
-
-.btn.operator.sci{
-  background-color: #e5ab36;
-}
-
-.btn.operator.sci:hover{
-  background-color: #c38915;
-}
 
 img{
   height: 70px;
   width: 50px;
   backface-visibility: hidden;
-  margin-right: 15px;
+  
   border-radius: .25rem;
   background-color: transparent;
   overflow: hidden;
@@ -222,31 +130,23 @@ img{
 
 
 
-.btn.operator.tri{
-   
-  height: 30px;
-  font-size: 15px;
-  background-color: #ffa81c;
-}
 
-.btn.operator.tri:hover{
-  background-color: #a96f12;
-}
 
 .reloj{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  width: 100px;
-  letter-spacing: 1px;
+  
+  width: 300px;
+  letter-spacing: 2px;
   background-color: black;
   margin-bottom: 5px;
   border-radius: .25rem;
   color: #ff0000;
   font-weight: bold;
   font-family: 'DSEG7';
-  font-size: 24px;
+  font-size: 44px;
+  padding: 20px;
 }
 .activadores{
   display: flex;

@@ -121,45 +121,14 @@ function calculate(): void {
             case 'log10':
                 result = Math.log10(prev); 
                 break;
-            case 'logn(X)':
-                result = logNdX(prev, current); 
-                break;
+            
             case 'ln':
                 result = Math.log(prev); 
                 break;
             case 'abs':
                 result = Math.abs(prev); 
                 break;
-            case 'sen':
-                result = Math.sin(gradianes(prev)); 
-                break;
-            case 'cos':
-                result = Math.cos(gradianes(prev)); 
-                break;
-            case 'tan':
-                result = Math.tan(gradianes(prev)); 
-                break;
-            case 'sec':
-                result = 1 / Math.cos(gradianes(prev)); 
-                break;
-            case 'cosec':
-                result = 1 / Math.sin(gradianes(prev)); 
-                break;
-            case 'cotan':
-                result = 1 / Math.tan(gradianes(prev)); 
-                break;
-                //hasta aqui
-            case 'bin':
-                result = decimalAbinarioUoctal(prev, operator); 
-                break;
-            
-            case 'oct':
-                result = decimalAbinarioUoctal(prev, operator); 
-                break;
-
-            case 'dec':
-                result = binarioAdecimal(prev); 
-                break;
+           
             
             default:
                 return;

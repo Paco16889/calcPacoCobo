@@ -11,72 +11,40 @@
   <div class="calculator" id="calculator">
     <div class="display">
       <div class="details">
-        <div class="suncell">
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-        </div>
-        <div class="reloj" id="reloj"></div>
-        <div class="activadores">
-           <div class="btnCientifica">
-          <label id="switch">
-            <input type="checkbox" id="sliderCientifica">
-            <span class="slider"></span>
-          </label>
-         
-  
-        </div>
-         <div class="btnCientifica">
-          <label id="switchBin">
-            <input type="checkbox" id="sliderBinaria">
-            <span class="slider"></span>
-          </label>
-         
-  
-        </div>
-        </div>
        
-        <img src="casio-logo-png-transparent.png" alt="">
+        <div class="reloj" id="reloj">
+        </div>
+        
+
+        <div class="activadores">
+           <img src="casio-logo-png-transparent.png" alt="">
+
+          <div class="btnCientifica">
+            <label id="switch">
+              <input type="checkbox" id="sliderCientifica">
+              <span class="slider"></span>
+            </label>
+          </div> 
+          
+         
+        </div>
       </div>
-      
-      <input type="text" id="display" readonly>
-    </div>
-    <div class="buttons sci" id="containerCientifica">
-      <!-- añadir log1p que es el neperiano en ts tambien logaritmo con base elegible-->
-      
-    </div>
-    <div class="buttons bin" id="containerBinaria">
-      
     </div>
     
+  
+    
     <div class="buttons" id="buttonsPrimarios">
-      <button class="btn clear" data-action="clear">C</button>
+      <button class="btn clear" data-action="clear">Alarm</button>
       <button class="btn operator" data-action="delete">⌫</button>
-      <button class="btn operator" data-value="%">%</button>
-      <button class="btn operator" data-value="/">/</button>
-      
-      <button class="btn number" data-value="7">7</button>
-      <button class="btn number" data-value="8">8</button>
-      <button class="btn number" data-value="9">9</button>
-      <button class="btn operator" data-value="*">×</button>
-
-
-      
-      <button class="btn number" data-value="4">4</button>
-      <button class="btn number" data-value="5">5</button>
-      <button class="btn number" data-value="6">6</button>
-      <button class="btn operator" data-value="-">-</button>
-      
-      
-      <button class="btn number" data-value="1">1</button>
-      <button class="btn number" data-value="2">2</button>
-      <button class="btn number" data-value="3">3</button>
       <button class="btn operator" data-value="+">+</button>
+      <button class="btn operator" data-value="-">-</button>
+      <button class="btn number cambia" data-action="cambiaHora">CambiaHora</button>
+      <button class="btn equals" id="botonIgual" data-action="horas" rowspan="2">H</button>
+      <button class="btn equals" id="botonIgual" data-action="minutos" rowspan="2">M</button>
       
       
-      <button class="btn number zero" id="botonCero" data-value="0">0</button>
-      <button class="btn number" data-value=".">.</button>
-      <button class="btn equals" id="botonIgual" data-action="calculate" rowspan="2">=</button>
+      
+      <button class="btn number stop" id="stopAlarm" data-value="stopA">STOP</button>
     </div>
     
   </div>
