@@ -3,9 +3,7 @@ let currentInput = '0';
 let operator = '';
 let previousInput = '';
 let numeroEnMemoria = '';
-let activarBinaria = false;
-let activarHexa = false;
-let activarOctal = false;
+let horarioVerano = false;
 function appendToDisplay(value) {
     let update = false;
     const signos = ['+', '-', '*', '/', '%', '^2', '^n', 'v2', 'vn', '-1', 'log2', 'log10', 'logn(X)', 'ln', 'abs', 'sen', 'cos', 'tan', 'sec', 'cosec', 'cotan', 'bin', 'hex', 'oct', 'dec'];
@@ -30,43 +28,6 @@ function appendToDisplay(value) {
             currentInput += value;
         }
     }
-    if (update) {
-        updateDisplay();
-    }
-}
-function updateDisplay() {
-    const display = document.getElementById('display');
-    const checkNumer = currentInput;
-    if (currentInput === 'pi') {
-        const piNumero = Math.PI;
-        currentInput = piNumero.toString();
-    }
-    else if (currentInput === 'euler') {
-        const eNumero = Math.E;
-        currentInput = eNumero.toString();
-    }
-    else if (currentInput === 'phi') {
-        const phiNumero = (1 + Math.sqrt(5)) / 2;
-        currentInput = phiNumero.toString();
-    }
-    display.value = currentInput;
-}
-function clearDisplay() {
-    currentInput = '0';
-    operator = '';
-    previousInput = '';
-    updateDisplay();
-}
-function deleteLast() {
-    //&& currentInput.slice(0, 5) === 'ERROR' para que aunque escribe numeros despues de ERROR
-    //dandole a delete nos deje la pantalla a 0 como cuando solo está ERROR 
-    if (currentInput.length > 1 && currentInput !== 'ERROR') {
-        currentInput = currentInput.slice(0, -1);
-    }
-    else {
-        currentInput = '0';
-    }
-    updateDisplay();
 }
 function calculate() {
     if (previousInput !== '' && currentInput !== '' && operator !== '') {
@@ -80,52 +41,15 @@ function calculate() {
             case '-':
                 result = prev - current;
                 break;
-            case '*':
-                result = prev * current;
-                break;
-            case '%':
-                result = prev % current;
-                break;
-            case '/':
-                result = prev / current;
-                break;
-            //estos deben ser resultado directo nada maspulsar boton de los de exponente fijo o base fija(logaritmos)
-            case '^2':
-                result = Math.pow(prev, 2);
-                break;
-            case '^n':
-                result = Math.pow(prev, current);
-                break;
-            case 'v2':
-                result = Math.sqrt(prev);
-                break;
-            case 'vn':
-                result = Math.pow(prev, (1 / current));
-                break;
-            case '-1':
-                result = prev * -1;
-                break;
-            case 'log2':
-                result = Math.log2(prev);
-                break;
-            case 'log10':
-                result = Math.log10(prev);
-                break;
-            case 'ln':
-                result = Math.log(prev);
-                break;
-            case 'abs':
-                result = Math.abs(prev);
-                break;
             default:
                 return;
         }
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
-    setInterval(dameReloj, 1000);
-    updateDisplay();
+    setInterval(actulizarHorario, 1000);
     setupEventListeners();
+    activarBoton();
 });
 function setupEventListeners() {
     const buttonsContainer = document.querySelectorAll('.buttons');
@@ -140,17 +64,14 @@ function setupEventListeners() {
                     //algo al cuadrado solo dando al action del cuadrado entre en calculate teniendo ya 
                     //operator
                     if (action === 'clear') {
-                        clearDisplay();
                     }
                     else if (action === 'delete') {
-                        deleteLast();
                     }
                     else if (value) {
                         appendToDisplay(value);
                     }
                     else if (action === 'mr' || action === 'm') {
                         //variable igual a lo que valga enese momento currentInput
-                        memorizarNumero(action);
                     }
                     else if (value && action) {
                         calculate();
@@ -160,18 +81,13 @@ function setupEventListeners() {
         });
     }
 }
-function memorizarNumero(action) {
-    if (action === 'mr') {
-        numeroEnMemoria = currentInput;
+function dameReloj(horarioVerano) {
+    let utc = 3600;
+    if (horarioVerano) {
+        utc = 7200;
     }
-    else {
-        currentInput = numeroEnMemoria;
-        updateDisplay();
-    }
-}
-function dameReloj() {
     // const now = new Date();
-    let ahora = (Math.floor(Date.now() / 1000)) + 7200; //hacer un selector mediante boton o algo para horario de verano
+    let ahora = (Math.floor(Date.now() / 1000)) + utc; //hacer un selector mediante boton o algo para horario de verano
     //y barajar cambio de hora
     let segundos = ahora % 60;
     let minutos = (Math.floor(ahora / 60)) % 60;
@@ -186,6 +102,22 @@ function dameReloj() {
 function hacerPad(n, cantidad) {
     const numero = n.toString();
     return numero.padStart(cantidad, '0');
+}
+function activarBoton() {
+    const slider = document.getElementById("sliderCientifica");
+    if (!slider)
+        return;
+    slider.addEventListener('change', () => {
+        if (slider.checked) {
+            horarioVerano = true;
+        }
+        else {
+            horarioVerano = false;
+        }
+    });
+}
+function actulizarHorario() {
+    dameReloj(horarioVerano);
 }
 //REVISA QUE CUANDO TENGAS UN NUMERO Y PRESIONES UN NUMERO IRREAL LO SUSTITUYA POR EL VALOR DEL NUEMRO IRREAL
 // YT NO AÑADA EL DATA-VALUE(MIRA EL LA PARTE QUE CONTROLA VALOR Y ACCION DE CADA BOTON Y PON UN ACONCICION DE SI

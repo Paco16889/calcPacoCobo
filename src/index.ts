@@ -6,9 +6,7 @@ let currentInput: string = '0';
 let operator: string = '';
 let previousInput: string = '';
 let numeroEnMemoria: string = '';
-let activarBinaria: boolean = false;
-let activarHexa: boolean = false;
-let activarOctal: boolean = false;
+let horarioVerano: boolean = false;
 
 function appendToDisplay(value: string): void {
     let update = false;
@@ -33,47 +31,14 @@ function appendToDisplay(value: string): void {
             currentInput += value;
         }
     }
-    if (update) {
-        updateDisplay();
-    }
-}
-
-function updateDisplay(): void {
-    const display = document.getElementById('display') as HTMLInputElement;
-    const checkNumer = currentInput;
-    if (currentInput === 'pi') {
-        const piNumero = Math.PI;
-        currentInput = piNumero.toString()
-    }else if(currentInput === 'euler'){
-        const eNumero = Math.E;
-        currentInput = eNumero.toString();
-    }else if (currentInput === 'phi') {
-        const phiNumero = (1 + Math.sqrt(5)) / 2;
-        currentInput = phiNumero.toString();
-    }
-
     
-    display.value = currentInput;
 }
 
-function clearDisplay(): void {
-    currentInput = '0';
-    operator = '';
-    previousInput = '';
-    updateDisplay();
-}
 
-function deleteLast(): void {
-    
-    //&& currentInput.slice(0, 5) === 'ERROR' para que aunque escribe numeros despues de ERROR
-    //dandole a delete nos deje la pantalla a 0 como cuando solo está ERROR 
-    if (currentInput.length > 1 && currentInput !== 'ERROR') {
-        currentInput = currentInput.slice(0, -1);
-    } else {
-        currentInput = '0';
-    }
-    updateDisplay();
-}
+
+
+
+
 
 function calculate(): void {
     if (previousInput !== '' && currentInput !== '' && operator !== '') {
@@ -89,47 +54,6 @@ function calculate(): void {
             case '-':
                 result = prev - current;
                 break;
-            case '*':
-                result = prev * current;
-                break;
-            case '%':
-                result = prev % current;
-                break;
-            case '/':
-                result = prev / current; 
-                break;
-            
-                //estos deben ser resultado directo nada maspulsar boton de los de exponente fijo o base fija(logaritmos)
-            case '^2':
-                result = Math.pow(prev, 2); 
-                break;
-            case '^n':
-                result = Math.pow(prev, current); 
-                break;
-            case 'v2':
-                result = Math.sqrt(prev) 
-                break;
-            case 'vn':
-                result = Math.pow(prev, (1 / current)); 
-                break;
-            case '-1':
-                result = prev * -1; 
-                break;
-            case 'log2':
-                result = Math.log2(prev); 
-                break;
-            case 'log10':
-                result = Math.log10(prev); 
-                break;
-            
-            case 'ln':
-                result = Math.log(prev); 
-                break;
-            case 'abs':
-                result = Math.abs(prev); 
-                break;
-           
-            
             default:
                 return;
         } 
@@ -142,9 +66,10 @@ function calculate(): void {
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    setInterval(dameReloj, 1000);
-    updateDisplay();
+    setInterval(actulizarHorario, 1000);
+    
     setupEventListeners();
+    activarBoton();
     
 });
 
@@ -163,15 +88,21 @@ function setupEventListeners(): void {
                 //aqui es donde creo que tengo que tocar para decir que cuando haga por ejemplo
                 //algo al cuadrado solo dando al action del cuadrado entre en calculate teniendo ya 
                 //operator
-                    if (action === 'clear') {
-                        clearDisplay();
-                    } else if (action === 'delete') {
-                        deleteLast();
-                    } else if (value) {
-                        appendToDisplay(value);
+                    if (action === 'cambiaHora') {
+                        //aqui hay que hacer algun tipo de selector o algo que permita elegir dsitintos utc
+                    } else if (action === 'alarm') {
+                        //aqui deberia de abrirse una pantalla o que la hora de la pantalla se quede a 00:00
+                        //y con los controles mas menos eligamos una hora y al pulsar stop debe de guardarse si no hay 
+                        //alarma guardada
+                        //otra opcion crear otro boton o dejar el boton de atras para aceptar alarma y guardarla en un arraY
+                        //de horas que en el caso de que aguno suene activar n sonido 
+                        //descargar musiquilla alarma
+                    } else if (action === 'stop') {
+                        //en caso de estar activada una alarma esta accion la parará
+                        //en caso de queno haya nada no harña nada
                     }else if (action === 'mr' || action === 'm') {
                         //variable igual a lo que valga enese momento currentInput
-                        memorizarNumero(action);
+                        
                     }else if (value && action) {
                     
                         calculate();
@@ -183,26 +114,20 @@ function setupEventListeners(): void {
     }
 }
 
-function memorizarNumero(action: string) {
-    
-    if (action === 'mr') {
-         numeroEnMemoria = currentInput;
-        
-    }else{
-        currentInput = numeroEnMemoria; 
-        updateDisplay();
-    }
-
-}
 
 
 
 
 
-function dameReloj() {
-      
+
+function dameReloj(horarioVerano: boolean) {
+            
+            let utc = 3600;
+            if (horarioVerano) {
+                utc = 7200;
+            }
            // const now = new Date();
-            let ahora = (Math.floor(Date.now()/1000))+7200;//hacer un selector mediante boton o algo para horario de verano
+            let ahora = (Math.floor(Date.now()/1000))+utc;//hacer un selector mediante boton o algo para horario de verano
             //y barajar cambio de hora
             let segundos = ahora % 60;
             let minutos = (Math.floor(ahora / 60)) % 60;
@@ -223,6 +148,28 @@ function dameReloj() {
 function hacerPad(n: number, cantidad: number): string {
     const numero = n.toString();
     return numero.padStart(cantidad, '0');
+}
+
+function activarBoton() {
+       const slider = document.getElementById("sliderCientifica") as HTMLInputElement;
+        
+        
+    
+    if (!slider) return;
+    
+    slider.addEventListener('change', () => {
+        if (slider.checked) {
+            horarioVerano = true;
+        }else{
+            horarioVerano = false;
+        }
+    });
+
+    
+}
+
+function actulizarHorario() {
+    dameReloj(horarioVerano);
 }
 
 
