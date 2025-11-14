@@ -40,7 +40,7 @@ function appendToDisplay(value: string): void {
 
 
 
-function calculate(): void {
+function ajustaHora(): void {
     if (previousInput !== '' && currentInput !== '' && operator !== '') {
         const prev = parseFloat(previousInput);
         const current = parseFloat(currentInput);
@@ -90,6 +90,7 @@ function setupEventListeners(): void {
                 //operator
                     if (action === 'cambiaHora') {
                         //aqui hay que hacer algun tipo de selector o algo que permita elegir dsitintos utc
+                        ajustaHora();
                     } else if (action === 'alarm') {
                         //aqui deberia de abrirse una pantalla o que la hora de la pantalla se quede a 00:00
                         //y con los controles mas menos eligamos una hora y al pulsar stop debe de guardarse si no hay 
