@@ -33,7 +33,7 @@ jobs:
         run: tsc
       # Copia html, css e imágenes a /dist junto con el js compilado
       - name: Copy static files to dist
-        run: cp src/*.html src/*.css src/*.png dist/
+        run: cp src/*.html src/*.css src/*.png src/*.ttf dist/
       - name: Setup Pages
         uses: actions/configure-pages@v5
       # Despliega desde /dist donde está todo junto
