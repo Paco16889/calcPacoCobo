@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="calculator-icon_34473.png">
 </head>
 <body>
-  <div class="calculator">
+  <div class="calculator" id="calculator">
     <div class="display">
       <div class="details">
         <div class="suncell">
@@ -49,7 +49,7 @@
       
     </div>
     
-    <div class="buttons">
+    <div class="buttons" id="buttonsPrimarios">
       <button class="btn clear" data-action="clear">C</button>
       <button class="btn operator" data-action="delete">⌫</button>
       <button class="btn operator" data-value="%">%</button>
@@ -74,9 +74,9 @@
       <button class="btn operator" data-value="+">+</button>
       
       
-      <button class="btn number zero" data-value="0">0</button>
+      <button class="btn number zero" id="botonCero" data-value="0">0</button>
       <button class="btn number" data-value=".">.</button>
-      <button class="btn equals" data-action="calculate" rowspan="2">=</button>
+      <button class="btn equals" id="botonIgual" data-action="calculate" rowspan="2">=</button>
     </div>
     
   </div>

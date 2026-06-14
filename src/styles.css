@@ -26,7 +26,10 @@ body {
   box-shadow: 0 6px 12px rgba(12, 15, 44, 0.3);
   width: 350px;
 }
-
+.calculator.grande{
+  width: 600px;
+  
+}
 .display {
   margin-bottom: 15px;
   padding-top: 5px;
@@ -92,6 +95,10 @@ body {
   gap: 10px;
 }
 
+.buttons.grande{
+  grid-template-columns: repeat(6, 1fr);
+}
+
 button{
   border-radius: .5rem;
 }
@@ -148,6 +155,14 @@ button{
 }
 
 .btn.zero {
+  grid-column: span 2;
+}
+
+.btn.zero.grande {
+  grid-column: 1;
+}
+
+.btn.equals.grande {
   grid-column: span 2;
 }
 

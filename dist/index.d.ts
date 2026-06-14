@@ -2,6 +2,9 @@ declare let currentInput: string;
 declare let operator: string;
 declare let previousInput: string;
 declare let numeroEnMemoria: string;
+declare let activarBinaria: boolean;
+declare let activarHexa: boolean;
+declare let activarOctal: boolean;
 declare function appendToDisplay(value: string): void;
 declare function updateDisplay(): void;
 declare function clearDisplay(): void;
@@ -20,4 +23,6 @@ declare function decimalAbinarioUoctal(n: number, sistema: string): number;
 declare function decimalAHexadecimal(n: number): string;
 declare function binarioAdecimal(n: number): number;
 declare function otroHex(n: number): string;
+declare function calculateBin(): void;
+declare function calculateHexa(n: string, z: string): void;
 //# sourceMappingURL=index.d.ts.map
